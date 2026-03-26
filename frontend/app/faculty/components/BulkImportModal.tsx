@@ -77,7 +77,8 @@ export default function BulkImportModal({
             formData.append("pdf", file);
 
             // Use the environment variable for API URL or default to localhost
-            const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:5002/ai";
+            const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || 
+        (process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/ai` : "http://localhost:5002/ai");
 
             const supabase = createClient();
             const { data: { session } } = await supabase.auth.getSession();

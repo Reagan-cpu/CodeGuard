@@ -155,7 +155,7 @@ int main() {
       const headers = session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {};
 
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5002"}/execute`,
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5002"}/execute`,
         { code, lang, stdinInput: input },
         { headers }
       );

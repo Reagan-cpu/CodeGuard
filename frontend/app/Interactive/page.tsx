@@ -98,7 +98,8 @@ export default function Home() {
 
     try {
       const config = JSON.parse(localStorage.getItem("ai_settings") || "{}");
-      const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:5002/ai";
+      const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || 
+        (process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/ai` : "http://localhost:5002/ai");
 
       if (!supabase) return;
       const { data: { session } } = await supabase.auth.getSession();
@@ -561,7 +562,7 @@ export default function Home() {
                     <div className="flex-1 overflow-hidden relative">
                       <InteractiveTerminal
                         ref={interactiveTerminalRef}
-                        wsUrl={(() => { const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002'; const url = new URL(apiUrl); return `${url.protocol === 'https:' ? 'wss:' : 'ws:'}//${url.host}`; })()}
+                        wsUrl={(() => { const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002'; try { const url = new URL(apiUrl); return `${url.protocol === 'https:' ? 'wss:' : 'ws:'}//${url.host}`; } catch { return "ws://localhost:5002"; } })()}
                         fontSize={15}
                         fontFamily="'Fira Code', 'JetBrains Mono', monospace"
                         onOutput={(data: string) =>

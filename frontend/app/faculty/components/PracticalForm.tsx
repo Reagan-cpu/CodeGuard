@@ -1118,8 +1118,8 @@ Do not include markdown formatting, explanations, or any text outside the JSON a
 
       const savedSettings = localStorage.getItem("ai_settings");
       const config = savedSettings ? JSON.parse(savedSettings) : {};
-      const apiUrl =
-        process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:5002/ai";
+      const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || 
+        (process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/ai` : "http://localhost:5002/ai");
 
       const { data: { session } } = await supabase.auth.getSession();
 

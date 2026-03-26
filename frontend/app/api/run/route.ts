@@ -205,9 +205,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // helper to call runner service
     const EXECUTE_URL =
-      process.env.EXECUTE_URL || "http://localhost:5002/execute";
+      process.env.EXECUTE_URL ||
+      (process.env.NEXT_PUBLIC_API_URL
+        ? `${process.env.NEXT_PUBLIC_API_URL}/execute`
+        : "http://localhost:5002/execute");
 
     // Get the Supabase session token to forward to backend
     const { data: { session } } = await supabase.auth.getSession();
